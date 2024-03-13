@@ -2,7 +2,7 @@ name: Zero To Production CI
 run-name: ${{github.actor}} running Continous Integration
 on:
   workflow_dispatch:
-  pull_requests:
+  pull_request:
   push:
     branches:
     - 'main'
