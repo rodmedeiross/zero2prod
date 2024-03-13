@@ -1,0 +1,25 @@
+name: Zero To Production CI
+run-name: ${{github.actor}} running Continous Integration
+on:
+  workflow_dispatch:
+  pull_requests:
+  push:
+    branches:
+    - 'main'
+
+jobs:
+  running-tests:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Projects
+        uses: actions/checkout@v4
+
+      - name: Setup Cargo
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Run Cargo Test   
+        run: cargo test
+
