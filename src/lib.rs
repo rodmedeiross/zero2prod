@@ -1,14 +1,17 @@
+pub mod configuration;
+pub mod routes;
+pub mod startup;
+
+use routes::health_check;
+use routes::subscribe;
+
 use actix_web::dev::Server;
-#[allow(unused_imports)]
-use actix_web::{web, App, HttpRequest, HttpResponse, HttpResponseBuilder, HttpServer, Responder};
+use actix_web::{web, App, HttpServer};
 use std::net::TcpListener;
 
 fn config_handlers(cfg: &mut web::ServiceConfig) {
-    cfg.service(web::resource("/healthz").route(web::get().to(health_check)));
-}
-
-async fn health_check() -> HttpResponse {
-    HttpResponse::Ok().finish()
+    cfg.service(web::resource("/healthz").route(web::get().to(health_check)))
+        .service(web::resource("/subscriptions").route(web::post().to(subscribe)));
 }
 
 pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
