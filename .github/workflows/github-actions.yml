@@ -20,8 +20,9 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Setup DB Script
+      - name: Install SQLx and Setup Database
         run: |
+          cargo install --version='~0.7' sqlx-cli --no-default-features --features rustls,postgres
           chmod +x ./scripts/init_db.sh && source ./scripts/init_db.sh
 
       - name: Run Cargo Test   
