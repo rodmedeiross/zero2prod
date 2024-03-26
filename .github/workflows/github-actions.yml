@@ -28,7 +28,7 @@ jobs:
       - name: Load .env file
         run: |
           set -o allexport
-          source .env
+          source ./.env
           set +o allexport
 
       - name: Run Cargo Test   
