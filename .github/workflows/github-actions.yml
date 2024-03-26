@@ -25,12 +25,6 @@ jobs:
           cargo install --version='~0.7' sqlx-cli --no-default-features --features rustls,postgres
           chmod +x ./scripts/init_db.sh && source ./scripts/init_db.sh
 
-      - name: Load .env file
-        run: |
-          set -o allexport
-          source ./.env
-          set +o allexport
-
       - name: Run Cargo Test   
         run: cargo test
 
