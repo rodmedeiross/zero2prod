@@ -23,10 +23,11 @@ jobs:
       - name: Install SQLx and Setup Database
         run: |
           cargo install --version='~0.7' sqlx-cli --no-default-features --features rustls,postgres
+
+          export POSTGRES_DB=root
           chmod +x ./scripts/init_db.sh && source ./scripts/init_db.sh
 
       - name: Run Cargo Test   
         run: | 
           export TEST_LOG=true
-          export POSTGRES_DB=root
           TEST_LOG=true cargo test
