@@ -26,5 +26,7 @@ jobs:
           chmod +x ./scripts/init_db.sh && source ./scripts/init_db.sh
 
       - name: Run Cargo Test   
-        run: TEST_LOG=true cargo test
-
+        run: | 
+          export TEST_LOG=true
+          export POSTGRES_DB=root
+          TEST_LOG=true cargo test
