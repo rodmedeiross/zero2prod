@@ -26,5 +26,5 @@ jobs:
           chmod +x ./scripts/init_db.sh && source ./scripts/init_db.sh
 
       - name: Run Cargo Test   
-        run: cargo test
+        run: TEST_LOG=true cargo test
 
