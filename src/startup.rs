@@ -1,7 +1,8 @@
 use crate::routes::{health_check, subscribe};
-use actix_web::{dev::Server, middleware::Logger, web, App, HttpServer};
+use actix_web::{dev::Server, web, App, HttpServer};
 use sqlx::PgPool;
 use std::net::TcpListener;
+use tracing_actix_web::TracingLogger;
 
 fn config_handlers(cfg: &mut web::ServiceConfig) {
     cfg.service(web::resource("/healthz").route(web::get().to(health_check)))
@@ -13,7 +14,7 @@ pub fn run(listener: TcpListener, connection_pool: PgPool) -> Result<Server, std
     let connection = web::Data::new(connection_pool);
     let server = HttpServer::new(move || {
         App::new()
-            .wrap(Logger::default())
+            .wrap(TracingLogger::default())
             .configure(config_handlers)
             .app_data(connection.clone())
     })
