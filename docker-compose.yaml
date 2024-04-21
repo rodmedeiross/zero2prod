@@ -1,0 +1,23 @@
+name: zero2prod
+services:
+  webapi:
+    build: .
+    container_name: zero2prod-api
+    hostname: zero2prod
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+    links:
+      - "database:postgres"
+
+  database:
+    image: postgres:latest
+    container_name: database
+    hostname: postgresql
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: yourStrong(!)Password
+      POSTGRES_DB: root
+    ports:
+      - 5432:5432
