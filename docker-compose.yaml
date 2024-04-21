@@ -8,18 +8,15 @@ services:
       - 8000:8000
     depends_on:
       - database
-    links:
-      - "database:postgres"
     environment:
-      - "APP_DATABASE__USERNAME=root"
-      - "APP_DATABASE__PASSWORD=yourStrong(!)Password"
-      - "APP_DATABASE__HOST=postgres"
-      - "APP_DATABASE__PORT=5432"
-      - "APP_DATABASE__DATABASE_NAME=newsletter"
+      APP_DATABASE__HOST: postgres
+      APP_DATABASE__REQUIRE_SSL: false
+    networks:
+      - zero2prod
 
   database:
     image: postgres:latest
-    container_name: database
+    container_name: postgres-db
     hostname: postgres
     environment:
       POSTGRES_USER: root
@@ -27,3 +24,9 @@ services:
       POSTGRES_DB: root
     ports:
       - 5432:5432
+    networks:
+      - zero2prod
+
+networks:
+  zero2prod:
+    driver: bridge
